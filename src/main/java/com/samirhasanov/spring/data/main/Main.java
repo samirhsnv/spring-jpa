@@ -29,15 +29,14 @@ public class Main {
             new Organization("Rabitabank", "Banking"),
             new Organization("Bank of Baku OJSC", "Banking"),
             new Organization("Neuron Technologies", "Software Development")
-        }).forEach((org) -> {
-            service.saveOrganization(org);
-        });
+        }).forEach(service::saveOrganization);
 
-        List<Organization> organizationsAll = service.findAllOrganizations();
-        List<Organization> organizationsBanks = service.findAllOrganizationsByType("Bank");
         
-        System.out.println("All: " + organizationsAll);
-        System.out.println("Banks: " + organizationsBanks);
+        System.out.println("All: ");
+        service.findAllOrganizations().forEach(System.out::println);
+                
+        System.out.println("Banks: ");
+        service.findAllOrganizationsByType("Bank").forEach(System.out::println);
         
         Organization pshb = service.findOrganizationById(1L);
         
@@ -46,11 +45,8 @@ public class Main {
             new Employee("Irkan Ahmadov", "Senior software engineer", pshb)
         };
         
-        Arrays.asList(employees).forEach((employee) -> {
-            service.saveEmployee(employee);
-        });
+        Arrays.asList(employees).forEach(service::saveEmployee);
         
-        List<Employee> pshbEmployees = service.findAllEmployeesByOrganization(pshb);
-        System.out.println(pshbEmployees);
+        service.findAllEmployeesByOrganization(pshb).forEach(System.out::println);
     }
 }
